@@ -1,0 +1,16 @@
+{
+  "name": "ci-server",
+  "version": "0.1.0",
+  "description": "A ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel -d src -o build"
+  },
+  "keywords": [],
+  "author": "Jacob Carlsson <jacob.carlsson@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "nodegit": "^0.11.1"
+  }
+}
