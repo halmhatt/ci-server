@@ -13,23 +13,19 @@ source ./config.cfg
 # Read last build number
 if [ ! -f "$last_build_filename" ];then
     # Use 0001 as starting value
-    build_number="0001"
+    build_number=1
 else
     # Read from file otherwise
     read build_number < "$last_build_filename"
     # Increment value
     ((build_number++))
-    build_number="$(printf "%04d" $build_number)"
 fi
 
 # Save build number to file
-printf "%04d" "$build_number" > "$last_build_filename"
+echo "$build_number" > "$last_build_filename"
 
 # Create build dir name
-build_dir="$build_dir_base/$build_number"
-
-# Remove old dir
-# rm -rf "./$build_dir"
+build_dir="$build_dir_base/$(printf %04d $build_number)"
 
 # Make directory
 mkdir -p "./$build_dir"
@@ -56,7 +52,7 @@ git_sha1="$(git rev-parse HEAD 2>/dev/null)"
 # Save timestamp before user script is run
 timestamp_before=$(date -u +"%FT%T.000Z")
 
-# Run user script
+# Run user script in repo directory
 /bin/bash -v "../user-script.sh" 2>&1 | tee "$log_file"
 
 # Save exit code from user script
