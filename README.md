@@ -1,15 +1,16 @@
 # ci-server
-A simple CI server that runs tests on your repo.
+A simple CI server that runs tests on your repo. Aims to be very extendable and
+configurable.
 
 Currently a very early project but the goal is to have:
 
-* Webhook for CI builds from e.g. Github or Bitbucket
-* Docker containers that the tests run in. Instead of checking out into a subdir a docker container will be started
-that runs all tests. This will keep the code isolated and sandboxed. (opt in, checkin to subdir should still be possible)
-* Fetch script that fetches repo and checks for any updates. Runs a new build for each new commit (opt in)
-* Work with Github Pull requests (opt in)
-* Push status of builds to Slack (opt in)
-* Simple web frontend with Node where it is possible to see output from `user-script.sh` (opt in, run server and provide
+* **Webhook** for CI builds from e.g. Github or Bitbucket
+* **Docker containers** that the tests run in. Instead of checking out into a subdir a docker container will be started
+that runs all tests. This will keep the code *isolated and sandboxed*. (*opt in*, checkin to subdir should still be possible)
+* Fetch script that fetches repo and checks for any updates. Runs a new build for each new commit (*opt in*)
+* Work with **Github Pull** requests (*opt in*)
+* Push status of builds to **Slack** (*opt in*)
+* Simple web frontend with Node where it is possible to see output from `user-script.sh` (*opt in*, run server and provide
 domain name, open ports etc to make it public)
 
 ## Usage
