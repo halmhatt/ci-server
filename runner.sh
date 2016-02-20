@@ -7,8 +7,19 @@
 # Save current directory
 root_dir=$(pwd)
 
-# Load config
-source ./config.cfg
+# Load default config
+source ./defaults.cfg
+
+# Check if user config is present
+if [ -f "user.cfg" ]; then
+    source "./user.cfg"
+fi
+
+# If repo url is not set as variable or environment variable, exit
+if [ -z "$repo_url" ] && [ -z "$REPO_URL"]; then
+    >&2 echo "Repo url not set in config or environment variable"
+    exit 1;
+fi
 
 # Read last build number
 if [ ! -f "$last_build_filename" ];then
