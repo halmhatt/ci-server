@@ -8,11 +8,16 @@
 root_dir=$(pwd)
 
 # Load default config
-source ./defaults.cfg
+source "./defaults.cfg"
 
 # Check if user config is present
 if [ -f "user.cfg" ]; then
     source "./user.cfg"
+fi
+
+# Check that bookkeeping directory is present
+if [ ! -d "$bookkeeping_dir" ]; then
+    mkdir -p "./$bookkeeping_dir"
 fi
 
 # If repo url is not set as variable or environment variable, exit
@@ -22,18 +27,18 @@ if [ -z "$repo_url" ] && [ -z "$REPO_URL"]; then
 fi
 
 # Read last build number
-if [ ! -f "$last_build_filename" ];then
+if [ ! -f "$bookkeeping_dir/last-build" ];then
     # Use 0001 as starting value
     build_number=1
 else
     # Read from file otherwise
-    read build_number < "$last_build_filename"
+    read build_number < "$bookkeeping_dir/last-build"
     # Increment value
     ((build_number++))
 fi
 
 # Save build number to file
-echo "$build_number" > "$last_build_filename"
+echo "$build_number" > "$bookkeeping_dir/last-build"
 
 # Create build dir name
 build_dir="$build_dir_base/$(printf %04d $build_number)"
@@ -42,10 +47,10 @@ build_dir="$build_dir_base/$(printf %04d $build_number)"
 mkdir -p "./$build_dir"
 
 # Copy user script file
-cp "user-script.sh" "$build_dir/"
+cp "user-script.sh" "./$build_dir/"
 
 # Change directory to user dir
-cd "$build_dir"
+cd "./$build_dir"
 
 # Export environment variables
 export REPO_URL="$repo_url"
