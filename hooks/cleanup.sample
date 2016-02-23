@@ -1,0 +1,19 @@
+# Cleanup
+#
+# Runs as the last thing before exiting. Cleanup build directories and so on.
+# This script is run from the ROOT directory. You need to use the available
+# variables
+#
+# Available variables:
+#
+#   $user_script_exit_code  The exit code from user-script
+#   $CLONE_DIR              The directory that holds the cloned repo, safe to
+#                           remove if you do not need to debug
+#   $build_dir              The build directory for this run. Do not remove if
+#                           you want to keep the results and logs
+
+# Example
+# Remove repository after successful run
+if [[ $user_script_exit_code -eq 0 ]]; then
+    rm -rf "./$CLONE_DIR"
+fi

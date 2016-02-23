@@ -1,0 +1,13 @@
+# Create the build number
+#
+# The current implementation increments a digit and outputs
+# build numbers 0001, 0002, 0003, ...
+#
+# This file should set the variables:
+#
+#  $build_dir  A string that will be used as the build directory
+#              Should be a subdirectory of $build_dir_base
+
+# Example
+# Use the sampe-build-dir as build directory
+$build_dir="$build_dir_base/sample-build-dir"
