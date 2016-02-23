@@ -1,0 +1,10 @@
+# Post clone
+#
+# This hook is run AFTER the clone has happened.
+# You could do anything you like, eg. change branch or print some information
+#
+# You are currently INSIDE the repo dir.
+
+# Example
+# Checkout the branch "develop"
+git checkout develop

@@ -1,0 +1,13 @@
+# Clone the repo
+#
+# The current implementation runs
+#   git clone --depth 20 "$REPO_URL" "$CLONE_DIR"
+#
+# This file should run a git clone command
+#
+#  $REPO_URL   Repo URL to use
+#  $CLONE_DIR  The directory to clone to
+
+# Example
+# Clone without depth
+git clone "$REPO_URL" "$CLONE_DIR"

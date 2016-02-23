@@ -1,0 +1,9 @@
+# Post result
+#
+# Runs inside the build directory
+#
+# Available variables:
+#
+#  $user_script_exit_code  The exit code from user-script
+#  $log_file               The log file with output from user-script
+#  $result_file            JSON file with result from run
