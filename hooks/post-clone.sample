@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Post clone
 #
 # This hook is run AFTER the clone has happened.

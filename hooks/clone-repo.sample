@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Clone the repo
 #
 # The current implementation runs
