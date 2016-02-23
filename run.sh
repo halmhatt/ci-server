@@ -26,22 +26,27 @@ if [ -z "$repo_url" ] && [ -z "$REPO_URL"]; then
     exit 1;
 fi
 
-# Read last build number
-if [ ! -f "$bookkeeping_dir/last-build" ];then
-    # Use 0001 as starting value
-    build_number=1
+# Use hook for creating build dir if present
+if [ -f "./hooks/build-dir" ];then
+    source "./hooks/build-dir"
 else
-    # Read from file otherwise
-    read build_number < "$bookkeeping_dir/last-build"
-    # Increment value
-    ((build_number++))
+    # Read last build number
+    if [ ! -f "$bookkeeping_dir/last-build" ];then
+        # Use 0001 as starting value
+        build_number=1
+    else
+        # Read from file otherwise
+        read build_number < "$bookkeeping_dir/last-build"
+        # Increment value
+        ((build_number++))
+    fi
+
+    # Save build number to file
+    echo "$build_number" > "$bookkeeping_dir/last-build"
+
+    # Create build dir name
+    build_dir="$build_dir_base/$(printf %04d $build_number)"
 fi
-
-# Save build number to file
-echo "$build_number" > "$bookkeeping_dir/last-build"
-
-# Create build dir name
-build_dir="$build_dir_base/$(printf %04d $build_number)"
 
 # Make directory
 mkdir -p "./$build_dir"
