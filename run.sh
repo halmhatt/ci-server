@@ -49,13 +49,13 @@ else
 fi
 
 # Make build directory
-mkdir -p "./$build_dir"
+mkdir -p "$root_dir/$build_dir"
 
 # Copy user script file
-cp "user-script.sh" "./$build_dir/"
+cp "$user_script_file" "$root_dir/$build_dir/"
 
 # Change to build directory
-cd "./$build_dir"
+cd "$root_dir/$build_dir"
 
 # Export REPO_URL environment variable if not set
 if [[ -z "$REPO_URL" ]]; then
@@ -63,8 +63,8 @@ if [[ -z "$REPO_URL" ]]; then
 fi
 
 # Export CLONE_DIR environment variable if not set
-if [[ ! -z "$CLONE_DIR" ]]; then
-    export CLONE_DIR="$build_dir/$clone_dir"
+if [[ -z "$CLONE_DIR" ]]; then
+    export CLONE_DIR="$clone_dir"
 fi
 
 # Use hook to clone repo if available
@@ -76,7 +76,7 @@ else
 fi
 
 # Change directory to the cloned dir
-cd "$clone_dir"
+cd "$root_dir/$build_dir/$CLONE_DIR"
 
 # Extract some git data
 git_sha1=$(git rev-parse HEAD 2>/dev/null)
@@ -90,7 +90,7 @@ fi
 timestamp_before=$(date -u +'%FT%T.000Z')
 
 # Run user script in repo directory
-/bin/bash -v "$root_dir/$build_dir/user-script.sh" 2>&1 | tee "$log_filename"
+/bin/bash -v "$root_dir/$build_dir/$user_script_file" 2>&1 | tee "$log_filename"
 
 # Save exit code from user script
 user_script_exit_code=$?
