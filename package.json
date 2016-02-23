@@ -4,7 +4,7 @@
   "description": "A ",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "shellcheck -x defaults.cfg -x user.cfg run.sh user-script.sample.sh hooks/*.sample -e SC1091",
     "build": "babel -d src -o build"
   },
   "keywords": [],

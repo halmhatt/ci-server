@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Cleanup
 #
 # Runs as the last thing before exiting. Cleanup build directories and so on.

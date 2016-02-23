@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#
+
 # This file initializes things, copies "user-script.sh" to a new folder
 # and runns it there
 #
@@ -36,7 +36,7 @@ else
         build_number=1
     else
         # Read from file otherwise
-        read build_number < "$bookkeeping_dir/last-build"
+        read -r build_number < "$bookkeeping_dir/last-build"
         # Increment value
         ((build_number++))
     fi
@@ -52,10 +52,10 @@ fi
 mkdir -p "$root_dir/$build_dir"
 
 # Copy user script file
-cp "$user_script_file" "$root_dir/$build_dir/"
+cp "$user_script_file" "$root_dir/$build_dir/" || exit 1
 
 # Change to build directory
-cd "$root_dir/$build_dir"
+cd "$root_dir/$build_dir" || exit 1
 
 # Export REPO_URL environment variable if not set
 if [[ -z "$REPO_URL" ]]; then
@@ -76,7 +76,7 @@ else
 fi
 
 # Change directory to the cloned dir
-cd "$root_dir/$build_dir/$CLONE_DIR"
+cd "$root_dir/$build_dir/$CLONE_DIR" || exit 1
 
 # Extract some git data
 git_sha1=$(git rev-parse HEAD 2>/dev/null)
@@ -96,11 +96,11 @@ timestamp_before=$(date -u +'%FT%T.000Z')
 user_script_exit_code=$?
 
 # Change directory to build dir
-cd "$root_dir/$build_dir"
+cd "$root_dir/$build_dir" || exit 1
 
 # Run post user script hook if present
 if [[ -f './hooks/post-user-script' ]]; then
-    $log_file="./$log_filename"
+    log_file="./$log_filename"
     source './hooks/post-user-script'
 fi
 
@@ -122,13 +122,13 @@ EOF
 
 # Run post result hook if present
 if [[ -f './hooks/post-result' ]]; then
-    $log_file="$log_filename"
-    $result_file='./result.json'
+    export log_file="$log_filename"
+    export result_file='./result.json'
     source './hooks/post-result'
 fi
 
 # Change directory back to root dir
-cd "$root_dir"
+cd "$root_dir" || exit 1
 
 # Cleanup
 if [[ -f './hooks/cleanup' ]]; then
@@ -136,4 +136,4 @@ if [[ -f './hooks/cleanup' ]]; then
 fi
 
 # Exit with the same status code
-exit $user_script_exit_status
+exit $user_script_exit_code
